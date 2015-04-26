@@ -1,5 +1,8 @@
-# Ping Exporter
-Export availability, request latencies and size for remote services.
+# Blackbox Prober
+*aka pingprom*
+
+Export blackbox telemetry like availability, request latencies and
+request size for remote services.
 
 ## Supported URLs
 ### http/https
@@ -19,7 +22,7 @@ Execute `ping`. Port and path are ignored.
 
 ## Example
 
-    ./ping_exporter \
+    ./blackbox_prober \
       -u http://5pi.de \
       -u https://5pi.de \
       -u icmp://192.168.178.1 \

@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/discordianfish/ping_exporter/pingers"
+	"github.com/discordianfish/blackbox_prober/pingers"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
