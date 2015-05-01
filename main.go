@@ -15,6 +15,9 @@ import (
 const namespace = "ping"
 
 var (
+	// set at build time
+	Version = "0.0.0.dev"
+
 	listenAddress = flag.String("web.listen-address", ":9110", "Address to listen on for web interface and telemetry.")
 	metricsPath   = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
 
@@ -97,7 +100,7 @@ func main() {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
-	log.Printf("Providing metrics for %v on %s%s", targets, *listenAddress, *metricsPath)
+	log.Printf("blackbox_prober v%s providing metrics for %v on %s%s", Version, targets, *listenAddress, *metricsPath)
 	prometheus.MustRegister(NewPingCollector(targets))
 	http.Handle(*metricsPath, prometheus.Handler())
 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
