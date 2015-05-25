@@ -16,9 +16,10 @@ will try to read until EOF which is required for exposing the size.
 Execute `ping`. Port and path are ignored.
 
 ## Available metrics
-- `ping_up{url}` 1 if url is reachable, 0 if not
-- `ping_latency_seconds{url}` Latency of request for url
-- `ping_size_bytes{url}` Size of request for url
+- `blackbox_up{url}` 1 if url is reachable, 0 if not
+- `blackbox_latency_seconds{url}` Latency of request for url
+- `blackbox_size_bytes{url}` Size of request for url
+- `blackbox_cert_expire_timestamp{url}` Expiry date of certificate (HTTPS only)
 
 ## Example
 
