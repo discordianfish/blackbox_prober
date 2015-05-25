@@ -27,7 +27,7 @@ var (
 // Metrics holds the prometheus metrics common among all pingers
 type Metrics struct {
 	Up      *prometheus.GaugeVec
-	Latency *prometheus.HistogramVec
+	Latency *prometheus.GaugeVec
 	Size    *prometheus.GaugeVec
 	Expires *prometheus.GaugeVec
 }

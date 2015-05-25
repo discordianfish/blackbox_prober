@@ -30,6 +30,6 @@ func pingerTCP(url *url.URL, m Metrics) {
 		}
 		m.Size.WithLabelValues(url.String()).Set(float64(size))
 	}
-	m.Latency.WithLabelValues(url.String()).Observe(time.Since(start).Seconds())
+	m.Latency.WithLabelValues(url.String()).Set(time.Since(start).Seconds())
 	m.Up.WithLabelValues(url.String()).Set(1)
 }

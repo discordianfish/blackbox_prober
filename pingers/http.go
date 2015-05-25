@@ -48,7 +48,7 @@ func pingerHTTP(url *url.URL, m Metrics) {
 		log.Printf("Couldn't read from %s: %s", url, err)
 	}
 
-	m.Latency.WithLabelValues(url.String()).Observe(time.Since(start).Seconds())
+	m.Latency.WithLabelValues(url.String()).Set(time.Since(start).Seconds())
 	m.Size.WithLabelValues(url.String()).Set(float64(size))
 	m.Up.WithLabelValues(url.String()).Set(1)
 

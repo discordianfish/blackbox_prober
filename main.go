@@ -38,7 +38,7 @@ func NewPingCollector(targets targets) *pingCollector {
 				Name:      "up",
 				Help:      "1 if url is reachable, 0 if not",
 			}, []string{"url"}),
-			Latency: prometheus.NewHistogramVec(prometheus.HistogramOpts{
+			Latency: prometheus.NewGaugeVec(prometheus.GaugeOpts{
 				Namespace: pingers.Namespace,
 				Name:      "latency_seconds",
 				Help:      "Latency of request for url",
