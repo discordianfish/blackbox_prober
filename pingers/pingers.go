@@ -12,6 +12,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+// Namespace for prober
+const Namespace = "blackbox"
+
 var (
 	timeout = flag.Duration("ping.timeout", 10*time.Second, "Timeout for requests.")
 
@@ -21,11 +24,12 @@ var (
 	pingers = make(map[string]func(url *url.URL, m Metrics))
 )
 
-// Metrics holds the prometheus metrics available for the pingers to set.
+// Metrics holds the prometheus metrics common among all pingers
 type Metrics struct {
 	Up      *prometheus.GaugeVec
 	Latency *prometheus.HistogramVec
 	Size    *prometheus.GaugeVec
+	Expires *prometheus.GaugeVec
 }
 
 func readSize(r io.Reader) (int, error) {

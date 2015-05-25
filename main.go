@@ -12,8 +12,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-const namespace = "ping"
-
 var (
 	// set at build time
 	Version = "0.0.0.dev"
@@ -30,23 +28,23 @@ type pingCollector struct {
 	metrics pingers.Metrics
 }
 
-// NewPingCollector returns a new PingCollector
+// NewPingCollector returns a new pingCollector
 func NewPingCollector(targets targets) *pingCollector {
 	return &pingCollector{
 		targets: targets,
 		metrics: pingers.Metrics{
 			Up: prometheus.NewGaugeVec(prometheus.GaugeOpts{
-				Namespace: namespace,
+				Namespace: pingers.Namespace,
 				Name:      "up",
 				Help:      "1 if url is reachable, 0 if not",
 			}, []string{"url"}),
 			Latency: prometheus.NewHistogramVec(prometheus.HistogramOpts{
-				Namespace: namespace,
+				Namespace: pingers.Namespace,
 				Name:      "latency_seconds",
 				Help:      "Latency of request for url",
 			}, []string{"url"}),
 			Size: prometheus.NewGaugeVec(prometheus.GaugeOpts{
-				Namespace: namespace,
+				Namespace: pingers.Namespace,
 				Name:      "size_bytes",
 				Help:      "Size of request for url",
 			}, []string{"url"}),

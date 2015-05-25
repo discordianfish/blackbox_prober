@@ -7,13 +7,22 @@ import (
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (
 	insecure = flag.Bool("ping.insecure", false, "Disable validation of server certificate for https.")
+
+	expireTimestamp = prometheus.NewGaugeVec(prometheus.GaugeOpts{
+		Namespace: Namespace,
+		Name:      "cert_expire_timestamp",
+		Help:      "Certificate expiry date in seconds since epoch.",
+	}, []string{"url"})
 )
 
 func init() {
+	prometheus.MustRegister(expireTimestamp)
 	pingers["http"] = pingerHTTP
 	pingers["https"] = pingerHTTP
 }
@@ -42,4 +51,14 @@ func pingerHTTP(url *url.URL, m Metrics) {
 	m.Latency.WithLabelValues(url.String()).Observe(time.Since(start).Seconds())
 	m.Size.WithLabelValues(url.String()).Set(float64(size))
 	m.Up.WithLabelValues(url.String()).Set(1)
+
+	if resp.TLS != nil {
+		var expires time.Time
+		if *insecure { // If insecure, we check the unverified certs
+			expires = resp.TLS.PeerCertificates[0].NotAfter
+		} else {
+			expires = resp.TLS.VerifiedChains[0][0].NotAfter
+		}
+		expireTimestamp.WithLabelValues(url.String()).Set(float64(expires.Unix()))
+	}
 }
