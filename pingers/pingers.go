@@ -5,7 +5,6 @@ import (
 	"errors"
 	"flag"
 	"io"
-	"log"
 	"net/url"
 	"time"
 
@@ -36,16 +35,12 @@ func readSize(r io.Reader) (int, error) {
 	size := 0
 	buf := make([]byte, bytes.MinRead) // Since we discard the buffer, alloc only once
 	for {
-		log.Print("reading now")
 		n, err := r.Read(buf)
-		log.Printf("-> finished")
 		size += n
 		if err != nil {
 			if err == io.EOF {
-				log.Printf("EOF")
 				return size, nil
 			}
-			log.Printf("Other error")
 			return size, err
 		}
 	}
