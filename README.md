@@ -29,3 +29,12 @@ Execute `ping`. Port and path are ignored.
       -u icmp://192.168.178.1 \
       -u tcp://freigeist.org:655
 
+## Using Docker
+
+    docker pull fish/blackbox-prober
+
+    docker run -d -p 9110:9110 fish/blackbox-prober \
+        -u http://5pi.de \
+        -u https://5pi.de \
+        -u icmp://192.168.178.1 \
+        -u tcp://freigeist.org:655
