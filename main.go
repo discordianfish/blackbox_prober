@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"sync"
 
 	"github.com/discordianfish/blackbox_prober/pingers"
 	"github.com/prometheus/client_golang/prometheus"
@@ -54,12 +55,18 @@ func NewPingCollector(targets targets) *pingCollector {
 
 // Collect implements prometheus.Collector.
 func (c pingCollector) Collect(ch chan<- prometheus.Metric) {
+	var wg sync.WaitGroup
 	for _, target := range c.targets {
-		log.Printf("collect %s", target)
-		if err := pingers.Ping(target, c.metrics); err != nil {
-			panic(err)
-		}
+		wg.Add(1)
+		go func(target *url.URL) {
+			defer wg.Done()
+			if err := pingers.Ping(target, c.metrics); err != nil {
+				panic(err)
+			}
+		}(target)
 	}
+	wg.Wait()
+
 	c.metrics.Up.Collect(ch)
 	c.metrics.Latency.Collect(ch)
 	c.metrics.Size.Collect(ch)
