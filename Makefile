@@ -14,5 +14,6 @@
 VERSION := 0.0.3
 TARGET := blackbox_prober
 GOFLAGS := -ldflags "-X main.Version=$(VERSION)"
+ROOTPKG := github.com/jswank/$(TARGET)
 
 include Makefile.COMMON
