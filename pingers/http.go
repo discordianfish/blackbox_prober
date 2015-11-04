@@ -19,10 +19,17 @@ var (
 		Name:      "cert_expire_timestamp",
 		Help:      "Certificate expiry date in seconds since epoch.",
 	}, []string{"url"})
+
+	statusCode = prometheus.NewGaugeVec(prometheus.GaugeOpts{
+		Namespace: Namespace,
+		Name:      "response_code",
+		Help:      "HTTP response code.",
+	}, []string{"url"})
 )
 
 func init() {
 	prometheus.MustRegister(expireTimestamp)
+	prometheus.MustRegister(statusCode)
 	pingers["http"] = pingerHTTP
 	pingers["https"] = pingerHTTP
 }
@@ -43,6 +50,7 @@ func pingerHTTP(url *url.URL, m Metrics) {
 		return
 	}
 	defer resp.Body.Close()
+
 	size, err := readSize(resp.Body)
 	if err != nil {
 		log.Printf("Couldn't read from %s: %s", url, err)
@@ -51,6 +59,8 @@ func pingerHTTP(url *url.URL, m Metrics) {
 	m.Latency.WithLabelValues(url.String()).Set(time.Since(start).Seconds())
 	m.Size.WithLabelValues(url.String()).Set(float64(size))
 	m.Up.WithLabelValues(url.String()).Set(1)
+
+	statusCode.WithLabelValues(url.String()).Set(float64(resp.StatusCode))
 
 	if resp.TLS != nil {
 		var expires time.Time

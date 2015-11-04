@@ -43,6 +43,12 @@ func TestHTTP(t *testing.T) {
 		if pb.Gauge.GetValue() == 0 {
 			t.Fatal("Expected non-zero value")
 		}
+
+		statusCode.WithLabelValues(server.URL).Write(pb)
+    if expected, got := float64(200), pb.Gauge.GetValue(); expected != got {
+			t.Fatalf("Expected: %f, Got: %f", expected, got)
+    }
+
 	}
 }
 

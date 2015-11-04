@@ -9,7 +9,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/discordianfish/blackbox_prober/pingers"
+	"github.com/jswank/blackbox_prober/pingers"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
