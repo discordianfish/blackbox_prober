@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERSION := 0.0.2
+VERSION := 0.0.3
 TARGET := blackbox_prober
-GOFLAGS := -ldflags "-X main.Version $(VERSION)"
+GOFLAGS := -ldflags "-X main.Version=$(VERSION)"
 
 include Makefile.COMMON
