@@ -31,9 +31,9 @@ Execute `ping`. Port and path are ignored.
 
 ## Using Docker
 
-    docker pull fish/blackbox-prober
+    docker pull jswank/blackbox_prober
 
-    docker run -d -p 9110:9110 fish/blackbox-prober \
+    docker run -d -p 9110:9110 jswank/blackbox_prober \
         -u http://5pi.de \
         -u https://5pi.de \
         -u icmp://192.168.178.1 \
