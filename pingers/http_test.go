@@ -45,9 +45,9 @@ func TestHTTP(t *testing.T) {
 		}
 
 		statusCode.WithLabelValues(server.URL).Write(pb)
-    if expected, got := float64(200), pb.Gauge.GetValue(); expected != got {
+		if expected, got := float64(200), pb.Gauge.GetValue(); expected != got {
 			t.Fatalf("Expected: %f, Got: %f", expected, got)
-    }
+		}
 
 	}
 }
