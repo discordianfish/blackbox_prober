@@ -22,9 +22,12 @@ Execute `ping`. Port and path are ignored.
 - `blackbox_latency_seconds{url}` Latency of request for url
 
 ### http/https
-- `blackbox_size_bytes{url}` Size of request for url
+- `blackbox_size_bytes{url}` Total size of response for url 
 - `blackbox_cert_expire_timestamp{url}` Expiry date of certificate (HTTPS only)
 - `blackbox_response_code{url}` Status code for the URL
+
+## tcp
+- `blackbox_size_bytes{url}` Size of the response
 
 ## Example
 
