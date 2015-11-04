@@ -5,9 +5,17 @@ import (
 	"testing"
 
 	dto "github.com/prometheus/client_model/go"
+	"os/exec"
 )
 
 func TestICMP(t *testing.T) {
+
+	_, err := exec.LookPath("ping")
+	if err != nil {
+		t.Log("Unable to test ICMP ping, as the ping executable is not in the path")
+		return
+	}
+
 	u, err := url.Parse("icmp://localhost")
 	if err != nil {
 		t.Fatal(err)
