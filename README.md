@@ -1,5 +1,6 @@
 # Blackbox Prober
-*aka pingprom*
+
+[![Build Status](https://travis-ci.org/jswank/blackbox_prober.svg)](https://travis-ci.org/jswank/blackbox_prober)
 
 Export blackbox telemetry like availability, request latencies and
 request size for remote services.
