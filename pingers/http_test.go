@@ -43,6 +43,12 @@ func TestHTTP(t *testing.T) {
 		if pb.Gauge.GetValue() == 0 {
 			t.Fatal("Expected non-zero value")
 		}
+
+		statusCode.WithLabelValues(server.URL).Write(pb)
+		if expected, got := float64(200), pb.Gauge.GetValue(); expected != got {
+			t.Fatalf("Expected: %f, Got: %f", expected, got)
+		}
+
 	}
 }
 
@@ -59,7 +65,7 @@ func TestHTTPSExpire(t *testing.T) {
 
 	pb := &dto.Metric{}
 	expireTimestamp.WithLabelValues(server.URL).Write(pb)
-	if expected, got := 2.524607999e+09, pb.Gauge.GetValue(); expected != got {
-		t.Fatal("Expected: %f, Got: %f", expected, got)
+	if expected, got := 3.6e+09, pb.Gauge.GetValue(); expected != got {
+		t.Fatalf("Expected: %f, Got: %f", expected, got)
 	}
 }
