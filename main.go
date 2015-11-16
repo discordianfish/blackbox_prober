@@ -105,6 +105,7 @@ func main() {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
+	log.Println("WARNING: This tool will be deprecated soon in favor of https://github.com/prometheus/blackbox_exporter")
 	log.Printf("blackbox_prober v%s providing metrics for %v on %s%s", Version, targets, *listenAddress, *metricsPath)
 	prometheus.MustRegister(NewPingCollector(targets))
 	http.Handle(*metricsPath, prometheus.Handler())
