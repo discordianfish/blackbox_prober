@@ -1,3 +1,6 @@
+# THIS IS DEPRECATED
+Please use https://github.com/prometheus/blackbox_exporter instead.
+
 # Blackbox Prober
 
 [![Build Status](https://travis-ci.org/jswank/blackbox_prober.svg)](https://travis-ci.org/jswank/blackbox_prober)
